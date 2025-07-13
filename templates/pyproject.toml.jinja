@@ -1,0 +1,64 @@
+{%- set PROJECT_NAME = PROJECT_NAME | default('python-boilerplate') -%}
+{%- set PACKAGE_NAME = PACKAGE_NAME | default('python_boilerplate') -%}
+{%- set AUTHOR_NAME = AUTHOR_NAME | default('RJ') -%}
+{%- set AUTHOR_EMAIL = AUTHOR_EMAIL | default('rjlucas92@gmail.com') -%}
+{%- set GITHUB_REPO_URL = GITHUB_REPO_URL | default('https://github.com/rjlucas92/' + PROJECT_NAME) -%}
+
+[build-system]
+requires = ["setuptools>=64.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "{{PROJECT_NAME}}"
+dynamic = ["version"]
+authors = [
+    {name = "{{AUTHOR_NAME}}", email = "{{AUTHOR_EMAIL}}"},
+]
+# Optional: Add a project description
+description = ""
+readme = "README.md"
+requires-python = ">=3.13"
+license = {text = "MIT"}
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    # Add your package dependencies here
+]
+
+[project.urls]
+"Homepage" = "{{GITHUB_REPO_URL}}"
+"Bug Tracker" = "{{GITHUB_REPO_URL}}/issues"
+"Repository" = "{{GITHUB_REPO_URL}}"
+
+[tool.setuptools.dynamic]
+version = {attr = "{{PACKAGE_NAME}}.version.__VERSION__"}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["{{PACKAGE_NAME}}*"]
+exclude = ["tests*"]
+
+# Optional: Development dependencies
+[project.optional-dependencies]
+dev = [
+    "pytest","black"
+]
+test = [
+    "pytest",
+]
+
+# Optional: Black formatter configuration
+[tool.black]
+line-length = 88
+target-version = ["py313"]
+
+# Optional: pytest configuration
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
